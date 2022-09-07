@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import NewsItem from "./NewsItem";
 import ReactPaginate from "react-paginate";
+import ShowNews from "./ShowNews";
 const optionsNews = [
   {
     label: "React",
@@ -51,6 +52,9 @@ const HomePage = () => {
   return (
     <div className="container">
       <h1 className="header">Hacker News</h1>
+      <div className="news-fav">
+        <ShowNews />
+      </div>
       <div className="options">
         <Select
           defaultValue={{ label: "Select your news", value: " " }}

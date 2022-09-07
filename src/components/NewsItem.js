@@ -6,7 +6,6 @@ import { getItemByKey, setItemKey } from "../shared/localStorage";
 const NewsItem = ({ author, createdAt, title, url, id }) => {
   const [fav, setFav] = useState(false);
   useEffect(() => {
-    debugger;
     const value = getItemByKey(id);
     setFav(value);
   }, [id]);
