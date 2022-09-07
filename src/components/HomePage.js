@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
 import NewsItem from "./NewsItem";
+import ReactPaginate from "react-paginate";
 
 const HomePage = () => {
   const [articles, setArticles] = useState([]);
   const [query, setQuery] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const optionsNews = [
     {
@@ -22,6 +25,10 @@ const HomePage = () => {
     },
   ];
 
+  const handlePageChange = (event) => {
+    setCurrentPage(event.selected);
+  };
+
   const handleSelectChange = ({ value }) => {
     setQuery(value);
   };
@@ -31,15 +38,16 @@ const HomePage = () => {
 
     const fetchData = async () => {
       const res = await fetch(
-        `https://hn.algolia.com/api/v1/search_by_date?query=${query}&page=0`
+        `https://hn.algolia.com/api/v1/search_by_date?query=${query}&page=${currentPage}`
       );
       const data = await res.json();
       setArticles(data.hits);
       setIsLoading(false);
+      setTotalPages(data.nbPages);
     };
 
     fetchData();
-  }, [query]);
+  }, [query, currentPage]);
 
   return (
     <div className="container">
@@ -68,6 +76,19 @@ const HomePage = () => {
           )
         )}
       </div>
+      <ReactPaginate
+        nextLabel=">"
+        previousLabel="<"
+        breakLabel="..."
+        forcePage={currentPage}
+        pageCount={totalPages}
+        renderOnZeroPageCount={null}
+        onPageChange={handlePageChange}
+        className="pagination"
+        activeClassName="active-page"
+        previousClassName="previous-page"
+        nextClassName="next-page"
+      />
     </div>
   );
 };
