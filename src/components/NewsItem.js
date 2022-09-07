@@ -1,14 +1,29 @@
 import { intlFormatDistance } from "date-fns";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsClock, BsHeartFill, BsHeart } from "react-icons/bs";
+import { getItemByKey, setItemKey } from "../shared/localStorage";
 
-const NewsItem = ({ author, createdAt, title, url }) => {
-  if (!title) return null;
+const NewsItem = ({ author, createdAt, title, url, id }) => {
+  const [fav, setFav] = useState(false);
+
+  // if (!title) return null;
+
+  useEffect(() => {
+    debugger;
+    const value = getItemByKey(id);
+    setFav(value);
+  }, [id]);
 
   const openInNewTab = () => {
     const newWindow = window.open(url, "_blank", "noopener,noreferrer");
     if (newWindow) newWindow.opener = null;
   };
+
+  const handleFav = () => {
+    setItemKey(id, !fav);
+    setFav(!fav);
+  };
+
   return (
     <section className="item-card">
       <section className="content" onClick={openInNewTab}>
@@ -23,9 +38,10 @@ const NewsItem = ({ author, createdAt, title, url }) => {
         </span>
         <h3>{title}</h3>
       </section>
-      <section className="like">
+      <section className="like" onClick={handleFav}>
         <span>
-          <BsHeart />
+          {fav ? <BsHeartFill /> : <BsHeart />} {fav?.toString()}
+          {id}
         </span>
       </section>
     </section>

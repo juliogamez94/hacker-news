@@ -2,6 +2,20 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import NewsItem from "./NewsItem";
 import ReactPaginate from "react-paginate";
+const optionsNews = [
+  {
+    label: "React",
+    value: "react",
+  },
+  {
+    label: "Angular",
+    value: "angular",
+  },
+  {
+    label: "Vue",
+    value: "vue",
+  },
+];
 
 const HomePage = () => {
   const [articles, setArticles] = useState([]);
@@ -9,21 +23,6 @@ const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-
-  const optionsNews = [
-    {
-      label: "React",
-      value: "react",
-    },
-    {
-      label: "Angular",
-      value: "angular",
-    },
-    {
-      label: "Vue",
-      value: "vue",
-    },
-  ];
 
   const handlePageChange = (event) => {
     setCurrentPage(event.selected);
@@ -67,6 +66,7 @@ const HomePage = () => {
             ({ author, created_at, story_title, story_url, objectID }) => (
               <NewsItem
                 key={objectID}
+                id={objectID}
                 title={story_title}
                 url={story_url}
                 author={author}
