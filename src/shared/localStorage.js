@@ -1,6 +1,5 @@
 const FAVORITE_NEWS_KEY = "FAVORITE_NEWS";
 export function getItemByKey(key) {
-  debugger;
   const data = window.localStorage.getItem(FAVORITE_NEWS_KEY);
   if (data) {
     const res = JSON.parse(data);

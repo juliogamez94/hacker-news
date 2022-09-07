@@ -5,9 +5,6 @@ import { getItemByKey, setItemKey } from "../shared/localStorage";
 
 const NewsItem = ({ author, createdAt, title, url, id }) => {
   const [fav, setFav] = useState(false);
-
-  // if (!title) return null;
-
   useEffect(() => {
     debugger;
     const value = getItemByKey(id);
@@ -39,10 +36,7 @@ const NewsItem = ({ author, createdAt, title, url, id }) => {
         <h3>{title}</h3>
       </section>
       <section className="like" onClick={handleFav}>
-        <span>
-          {fav ? <BsHeartFill /> : <BsHeart />} {fav?.toString()}
-          {id}
-        </span>
+        <span>{fav ? <BsHeartFill /> : <BsHeart />}</span>
       </section>
     </section>
   );
